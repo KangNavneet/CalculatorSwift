@@ -18,10 +18,13 @@ class ViewController: UIViewController {
     var firstNumber:Double?
     var secondNumber:String?=""
     var resultFlag:Bool = false
+    var digitFlag:Bool?
+    var oneOperation=true
     
     var previousNumber :Double? ;
     @IBAction func digitEntry(_ sender: UIButton)
     {
+        digitFlag=true
         if(flag && !resultFlag)
         {
             firstNumber = previousNumber
@@ -31,9 +34,13 @@ class ViewController: UIViewController {
         }
             else if(resultFlag)
         {
-           
+           if let myDigit = digitFlag
+           {
+            
             secondNumber!=secondNumber! + String(sender.tag - 1)
             numberLabel.text!=String(firstNumber!) + mathsOperation! + secondNumber!
+            
+            }
         }
         else
         {
@@ -67,75 +74,101 @@ class ViewController: UIViewController {
         
     }
     @IBAction func operationEntry(_ sender: UIButton) {
-        previousNumber = numberOnScreen ;
+        if let myDigit=digitFlag{
+            
+            
         
+        
+        previousNumber = numberOnScreen ;
+            if oneOperation{
         switch sender.tag
         {
-        case 11:
-            mathsOperation = "/"
-            if(resultFlag)
-            {
-                updateFirstSecond()
-                numberLabel.text! = String(firstNumber!) + mathsOperation!
-            }
-            else
-            {
-                numberLabel.text! = numberLabel.text!+mathsOperation!
-            }
+            case 11:
+                       mathsOperation = "/"
+                       if(resultFlag)
+                       {
+                           updateFirstSecond()
+                           numberLabel.text! = String(firstNumber!) + mathsOperation!
+                           
+                       }
+                       else
+                       {
+                           numberLabel.text! = numberLabel.text!+mathsOperation!
+                       }
+                       
+                       
+                       flag=true
+                       
+                  
+                   case 12:
+                       mathsOperation = "*"
+                       
+                       if(resultFlag)
+                       {
+                           
+                          updateFirstSecond()
+                          numberLabel.text! = String(firstNumber!) + mathsOperation!
             
-            
-            flag=true
-       
-        case 12:
-            mathsOperation = "*"
-            
-            if(resultFlag)
-            {
-                updateFirstSecond()
-               numberLabel.text! = String(firstNumber!) + mathsOperation!
-            }
-            else
-            {
-                updateFirstSecond()
-                numberLabel.text! = numberLabel.text!+mathsOperation!
-                
-            }
-            
+                       }
+                       else
+                       {
+                           updateFirstSecond()
+                           numberLabel.text! = numberLabel.text!+mathsOperation!
+                           
+                       }
+                       
 
-            flag=true
+                       flag=true
 
-        case 13:
-            mathsOperation = "-"
-           if(resultFlag)
-            {
-                updateFirstSecond()
-               numberLabel.text! = String(firstNumber!) + mathsOperation!
-            }
-            else
-            {
-                numberLabel.text! = numberLabel.text!+mathsOperation!
-                
-            }
+                   case 13:
+                       mathsOperation = "-"
+                      if(resultFlag)
+                       {
+                           updateFirstSecond()
+                          numberLabel.text! = String(firstNumber!) + mathsOperation!
+                       }
+                       else
+                       {
+                           numberLabel.text! = numberLabel.text!+mathsOperation!
+                           
+                       }
 
-            flag=true
-            
-         case 14:
-            mathsOperation = "+"
-            if(resultFlag)
-            {
-                updateFirstSecond()
-               numberLabel.text! = String(firstNumber!) + mathsOperation!
-            }
-            else
-            {
-                numberLabel.text! = numberLabel.text!+mathsOperation!
-                
-            }
-            flag=true
-            
-        default:
-            print("Maths Operation Done")
+                       flag=true
+                       
+                    case 14:
+                       mathsOperation = "+"
+                       if(resultFlag)
+                       {
+                           updateFirstSecond()
+                          numberLabel.text! = String(firstNumber!) + mathsOperation!
+                       }
+                       else
+                       {
+                           numberLabel.text! = numberLabel.text!+mathsOperation!
+                           
+                       }
+                       flag=true
+                       
+                   default:
+                       print("Maths Operation Done")
         
+        }
+            oneOperation=false
+        }
+            else
+            {
+                
+                
+                showResult()
+                
+                operationEntry(sender)
+                
+                
+               
+                
+                
+                
+            }
         }
         
     }
@@ -168,6 +201,7 @@ class ViewController: UIViewController {
             print("Default Operation")
             
         }
+        oneOperation=true
     }
     
     func updateFirstSecond()
@@ -189,6 +223,7 @@ class ViewController: UIViewController {
         flag=false
         resultFlag=false
         mathsOperation=""
+        digitFlag=nil
         
     }
     
